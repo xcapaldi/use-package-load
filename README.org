@@ -1,0 +1,51 @@
+#+TITLE: use-package-load
+#+AUTHOR: Xavier Capaldi
+
+Primitive [[https://github.com/jwiegley/use-package][use-package]] keyword extension that accepts a file path (or list of paths) to an elisp file defining code to be run after the package is loaded..
+
+* Installation
+** manual
+Download ~use-package-load.el~ from this repository to your loadpath and include ~(require 'use-package-load)~ in your ~init.el~ file.
+
+You can (and should) use the following ~use-package~ declaration:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package use-package-load
+    :ensure nil
+    :load-path "~/path/to/use-package-load.el")
+#+END_SRC
+
+** straight.el
+Alternatively if you use [[https://github.com/raxod502/straight.el][straight.el]] as your package manager, you can point it directly to the repository.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package use-package-load
+    :straight (use-package-load :type git :host github :repo "xcapaldi/use-package-load"))
+#+END_SRC
+
+* Usage
+Simply add the ~:load~ keyword to your use-package declaration with the path to an elisp file.
+The file will be loaded with ~load~.
+This keyword simply allows you to represent something like this:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package python
+    :config
+    (load "path/to/file.el"))
+#+END_SRC
+
+As this:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package python
+    :load "path/to/file.el")
+#+END_SRC
+
+Multiple files can be listed:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package python
+    :load ("path/to/first.el"
+	   "path/to/second.el"
+	   "path/to/third.el"))
+#+END_SRC
